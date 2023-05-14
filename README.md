@@ -28,52 +28,23 @@ Fare clic con il pulsante destro del mouse sul progetto nella finestra Solution 
    - Fare clic sul pulsante "Install" per installare la libreria nel progetto.
 
 ### 7) Per aggiungere il database chinook.db al progetto procediamo nel seguente modo:
-Per prima cosa scarichiamo il db tramite questo link: https://www.sqlitetutorial.net/wp-content/uploads/2018/03/chinook.zip , lo dezippiamo e:
-
-  - Per MAUI: Copia il file `chinook.db` nella cartella "App/Assets" del progetto MAUI.
-  - Per WPF: Copia il file `chinook.db` nella cartella "Assets" del progetto WPF.
-
-### 8) Per accedere al database appena aggiunto è necessario il seguente codice: 
+Per prima cosa scarichiamo il db tramite questo link: https://www.sqlitetutorial.net/wp-content/uploads/2018/03/chinook.zip , lo dezippiamo e per accedervi saranno necessari questi passaggi:
    
-   ```csharp
-using System;
-using System.IO;
+Nel tuo progetto WPF, crea una nuova cartella chiamata "Data" o "Database" (o qualsiasi nome tu preferisca) all'interno dell'esploratore della soluzione.
 
-namespace YourNamespace
-{
-    public class DatabaseAccess
-    {
-        private string dbFileName = "chinook.db";
-        private string dbFilePath;
+Fai clic con il pulsante destro del mouse sulla cartella "Data" o "Database" appena creata e seleziona "Aggiungi" > "Elemento esistente" dal menu contestuale.
 
-        public void AccessDatabase()
-        {
-            // Percorso del file nella cartella "raw"
-            string rawFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "raw");
-            string rawFilePath = Path.Combine(rawFolderPath, dbFileName);
+Nella finestra di dialogo di selezione file, naviga e seleziona il file "chinook.db" e fai clic su "Aggiungi".
 
-            // Percorso della directory "Local Data"
-            string localDataFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LocalData");
+Nel file di progetto (.csproj) del tuo progetto WPF, aggiungi manualmente la seguente riga di codice all'interno dell'elemento ItemGroup:
+```
+<Content Include="Data\chinook.db">
+  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+</Content>
+   ```
+Questo codice indica a Visual Studio di copiare il file "chinook.db" nella directory di output del tuo progetto durante la compilazione.
 
-            // Percorso completo del file nella directory "Local Data"
-            dbFilePath = Path.Combine(localDataFolderPath, dbFileName);
-
-            // Copia il file dalla cartella "raw" alla directory "Local Data" se non esiste già
-            if (!File.Exists(dbFilePath))
-            {
-                Directory.CreateDirectory(localDataFolderPath);
-                File.Copy(rawFilePath, dbFilePath);
-            }
-
-            // Ora puoi utilizzare il file "chinook.db" nella directory "Local Data" per le operazioni di database
-            // Esempio:
-            using (var connection = new SQLite.SQLiteConnection(dbFilePath))
-            {
-                // Esegui query e operazioni sul database qui
-            }
-        }
-    }
-}
+Una volta completati questi passaggi, il file "chinook.db" sarà incluso nel tuo progetto WPF e verrà copiato nella directory di output durante la compilazione
 
    
 
