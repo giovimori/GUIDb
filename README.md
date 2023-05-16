@@ -46,6 +46,10 @@ Questo codice indica a Visual Studio di copiare il file "chinook.db" nella direc
 
 Una volta completati questi passaggi, il file "chinook.db" sarà incluso nel tuo progetto WPF e verrà copiato nella directory di output durante la compilazione
 
+## Tabella artists di chinook.db:
+
+![image](https://github.com/giovimori/GUIDb/assets/116790906/61e8e57e-d729-47b7-9697-eacf7f953770)
+
    
 
 
